@@ -1,4 +1,4 @@
-# URP
+# URD
 undo redo pattern for C# applications
 this is a basic undo pattern for C# applications. developed for use in GS subtitle project (not published) 
 in this pattern when you want a undo / redo able action you will need to warp that action with using statement.
