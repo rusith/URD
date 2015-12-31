@@ -3,6 +3,7 @@ undo redo pattern for C# applications
 this is a basic undo pattern for C# applications. developed for use in GS subtitle project (not published) 
 in this pattern when you want a undo / redo able action you will need to warp that action with using statement.
 as a example if you going to change a property 
+if you want to implement your own operation . only thing you need to do is create a class--> extend Change class and IUndoAble interface. 
 you can do this
 ```C#
 using (new PropertyChange(Object, "Property", "Property changed "))
