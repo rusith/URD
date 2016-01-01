@@ -38,8 +38,8 @@ so on.. (check the code)
 
 benefits of this pattern 
 
-low CPU,Memory usage 
-undo only what you want
+<b>low CPU, Memory usage<br/> 
+undo only what you want</b>
 
 
 
