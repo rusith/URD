@@ -4,6 +4,7 @@ using URD.Tools;
 
 namespace URD.BasicOperations
 {
+    //property change
     public class PropertyChange : Change, IDisposable, IUndoAble
     {
         public PropertyChange(object obJect, string propertyname, string description)
