@@ -2,19 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace GSSubtitle.Controllers.UnReDoPattern
+namespace URD
 {
-    public class ChangeCollection:Change,IDisposable
+    public class ChangeCollection : Change, IDisposable, IUndoAble
     {
         Stack<Change> _Changes;
         string _Description = "";
         private bool _dispose = false;
         private bool AlreadyChangeCollecting = false;
-        public ChangeCollection(string Description,params string[] args)
-        { 
+        public ChangeCollection(string Description, params string[] args)
+        {
             _Changes = new Stack<Change>();
-            _Description = string.Format(Description,args);
+            _Description = string.Format(Description, args);
             URD.ChangeResevered += URD_ChangeResevered;
             AlreadyChangeCollecting = URD.CollectChanges;
             URD.CollectChanges = true;
@@ -24,7 +25,7 @@ namespace GSSubtitle.Controllers.UnReDoPattern
         private void URD_ChangeResevered(Change change)
         {
             if (_Changes != null)
-                _Changes.Push(change);     
+                _Changes.Push(change);
         }
 
         public void Dispose()
@@ -34,9 +35,27 @@ namespace GSSubtitle.Controllers.UnReDoPattern
                 URD.ChangeResevered -= URD_ChangeResevered;
                 URD.CollectChanges = AlreadyChangeCollecting;
                 URD.AddChange(new ChangeCollection { Description = _Description, Changes = _Changes });
-                
+
                 _dispose = false;
             }
+        }
+
+        public void Undo()
+        {
+            if (Changes.Count < 1) return;
+
+            foreach (Change change in Changes)
+                (change as IUndoAble).Undo();
+
+        }
+
+        public void Redo()
+        {
+            if (Changes.Count < 1) return;
+
+            foreach (Change change in Changes)
+                (change as IUndoAble).Redo();
+
         }
 
         public ChangeCollection() { }

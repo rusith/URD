@@ -1,14 +1,14 @@
-﻿using GSSubtitle.Tools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace GSSubtitle.Controllers.UnReDoPattern
+namespace URD.ListOperations
 {
-    class ListChangeAddElement:ListChange,IDisposable
+    public class ListChangeAddElement : ListChange, IDisposable, IUndoAble
     {
-        
+
         /// <summary>
         /// define in s using block to add change to URD
         /// </summary>
@@ -16,14 +16,14 @@ namespace GSSubtitle.Controllers.UnReDoPattern
         /// <param name="addedelement">added element</param>
         /// <param name="index">added item index (pass -50 to auto define)</param>
         /// <param name="description">Description of the change</param>
-        public ListChangeAddElement(object list, object addedelement,  string description,int Index=-25)
+        public ListChangeAddElement(object list, object addedelement, string description, int Index = -25)
         {
-            if (list==null || URD.NowChangingObject == list) return;
+            if (list == null || URD.NowChangingObject == list) return;
             dispose = true;
             Object = list;
             Description = description;
             AddedElement = addedelement;
-            
+
         }
 
         public void Dispose()
@@ -41,6 +41,23 @@ namespace GSSubtitle.Controllers.UnReDoPattern
             }
         }
 
+        public void Undo()
+        {
+            URD.NowChangingObject = Object;
+            ((System.Collections.IList)Object).Remove(AddedElement);
+
+            URD.NowChangingObject = null;
+            URD.RedoStack.Push(this);
+        }
+
+        public void Redo()
+        {
+
+            URD.NowChangingObject = Object;
+            ((System.Collections.IList)Object).Insert(Index, AddedElement);
+            URD.NowChangingObject = null;
+            URD.UndoStack.Push(this);
+        }
 
         public object AddedElement { get; set; }
         public int Index { get; set; }

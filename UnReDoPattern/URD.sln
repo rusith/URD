@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URD", "URD\URD.csproj", "{31BDB15A-EC1F-4DDD-ABEF-422ED3F21E0D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "URDTest", "URDTest\URDTest.csproj", "{8B4D95B5-D5D2-47C2-BD99-3C4E09226FD9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{31BDB15A-EC1F-4DDD-ABEF-422ED3F21E0D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{31BDB15A-EC1F-4DDD-ABEF-422ED3F21E0D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{31BDB15A-EC1F-4DDD-ABEF-422ED3F21E0D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{31BDB15A-EC1F-4DDD-ABEF-422ED3F21E0D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{8B4D95B5-D5D2-47C2-BD99-3C4E09226FD9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{8B4D95B5-D5D2-47C2-BD99-3C4E09226FD9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{8B4D95B5-D5D2-47C2-BD99-3C4E09226FD9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{8B4D95B5-D5D2-47C2-BD99-3C4E09226FD9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

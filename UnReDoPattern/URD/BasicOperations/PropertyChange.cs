@@ -1,19 +1,13 @@
-﻿using GSSubtitle.Tools;
+﻿
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+using URD.Tools;
 
-namespace GSSubtitle.Controllers.UnReDoPattern
+namespace URD.BasicOperations
 {
-    public class PropertyChange : Change, IDisposable
+    public class PropertyChange : Change, IDisposable, IUndoAble
     {
         public PropertyChange(object obJect, string propertyname, string description)
         {
-            //if (URD.NowChangingObject == obJect)
-            //{
-            //    if (URD.NowChangingPropertyName.Equals(propertyname)) return;
-            //}
 
             dispose = true;
             Description = description;
@@ -35,9 +29,28 @@ namespace GSSubtitle.Controllers.UnReDoPattern
                 URD.AddChange(this);
                 dispose = false;
             }
-            
+
         }
 
+        public void Undo()
+        {
+            URD.NowChangingObject = Object;
+            URD.NowChangingPropertyName = PropertyName;
+            Object.GetType().GetProperty(PropertyName).SetValue(Object, OldValue, null);
+            URD.NowChangingObject = null;
+            URD.NowChangingPropertyName = null;
+            URD.RedoStack.Push(this);
+            return;
+        }
+
+        public void Redo()
+        {
+            URD.NowChangingObject = Object;
+            URD.NowChangingPropertyName = PropertyName;
+            Object.GetType().GetProperty(PropertyName).SetValue(Object, OldValue, null);
+            URD.NowChangingPropertyName = "";
+            URD.NowChangingObject = null;
+        }
 
         public object OldValue { get; set; } = null;
         public object NewValue { get; set; } = null;

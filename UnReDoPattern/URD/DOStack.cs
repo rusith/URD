@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 
-namespace GSSubtitle.Controllers.UnReDoPattern
+namespace URD
 {
-    class DOStack<T> : IEnumerable<T>
+    public class DOStack<T> : IEnumerable<T>
     {
         private readonly T[] _items;
 

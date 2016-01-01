@@ -1,0 +1,5 @@
+c:\users\rusith\documents\visual studio 2015\Projects\URD\URD\bin\Debug\URD.dll
+c:\users\rusith\documents\visual studio 2015\Projects\URD\URD\bin\Debug\URD.pdb
+c:\users\rusith\documents\visual studio 2015\Projects\URD\URD\obj\Debug\URD.csprojResolveAssemblyReference.cache
+c:\users\rusith\documents\visual studio 2015\Projects\URD\URD\obj\Debug\URD.dll
+c:\users\rusith\documents\visual studio 2015\Projects\URD\URD\obj\Debug\URD.pdb

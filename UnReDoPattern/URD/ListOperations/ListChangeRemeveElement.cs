@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace GSSubtitle.Controllers.UnReDoPattern
+namespace URD.ListOperations
 {
-    class ListChangeRemoveElement : ListChange, IDisposable
+    public class ListChangeRemoveElement : ListChange, IDisposable, IUndoAble
     {
         public ListChangeRemoveElement(object list, object removedelement, int removedat, string description)
         {
@@ -26,6 +27,30 @@ namespace GSSubtitle.Controllers.UnReDoPattern
                 }
                 dispose = false;
             }
+        }
+
+        public void Undo()
+        {
+
+            URD.NowChangingObject = Object;
+            if (((System.Collections.IList)Object).Count - 1 >= RemovedAt)
+                ((System.Collections.IList)Object).Add(RemovedElement);
+            else
+                ((System.Collections.IList)Object).Insert(RemovedAt, RemovedElement);
+
+            URD.NowChangingObject = null;
+            URD.RedoStack.Push(this);
+            return;
+        }
+
+        public void Redo()
+        {
+
+            URD.NowChangingObject = Object;
+            ((System.Collections.IList)Object).Remove(RemovedElement);
+            URD.NowChangingObject = null;
+            URD.UndoStack.Push(this);
+            return;
         }
 
         public object RemovedElement { get; set; }
