@@ -14,7 +14,7 @@ now the change you made to the "Property" property of the "Object" object is add
 
 if you want a undoAble list change you can do it using same syntax
 
-...
+```C#
 private void AddNewItem(<string>List list,string item,bool undoAble)
 {
 	using (undoAble?new ListChangeAddElement(list,item,"add new string to the string list"):null) //you can use a condition then you can minimize code
@@ -22,10 +22,10 @@ private void AddNewItem(<string>List list,string item,bool undoAble)
 		list.Add(item);
 	}
 }
-
+```
 
 Removing a Item 
-
+```C#
 private void RemoveItem(list,item,bool undoAble)
 {
 	using(undoAble?new ListChangeRemoveElement(list,item,list.IndexOf(item)," remove "+item+" from the string list"))
@@ -33,13 +33,13 @@ private void RemoveItem(list,item,bool undoAble)
 		list.Remove(item);
 	}
 }
-
+```
 so on.. (check the code)
 
 benefits of this pattern 
 
-#low CPU,Memory usage 
-#undo only what you want
+low CPU,Memory usage 
+undo only what you want
 
 
 
