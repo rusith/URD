@@ -7,6 +7,16 @@ namespace URD.BasicOperations
     //property change
     public class PropertyChange : Change, IDisposable, IUndoAble
     {
+        
+        private bool dispose;
+        private bool _IsValueType = false;
+        private bool _IsString = false;
+        
+        public object OldValue { get; set; } = null;
+        public object NewValue { get; set; } = null;
+        public string PropertyName { get; set; }
+        
+        
         public PropertyChange(object obJect, string propertyname, string description)
         {
 
@@ -49,12 +59,8 @@ namespace URD.BasicOperations
             }
         }
 
-        public object OldValue { get; set; } = null;
-        public object NewValue { get; set; } = null;
-        public string PropertyName { get; set; }
 
-        private bool dispose;
-        private bool _IsValueType = false;
-        private bool _IsString = false;
+
+
     }
 }
