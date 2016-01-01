@@ -17,8 +17,7 @@ namespace URD
         private static string _NextUndoDescription = "";
         private static string _NextRedoDescription = "";
         private static bool ARCING = false;
-
-        public static event NewChangeRecived ChangeResevered;
+        private static event NewChangeRecived _ChangeResevered;
 
         #endregion
 
@@ -30,6 +29,7 @@ namespace URD
         public static ChangeCollection TempChangeCollection{get{return _TempChangeCollection;} set{_TempChangeCollection=value}}
         public static object NowChangingObject { get; set; }
         public static string NowChangingPropertyName { get; set; }
+        public static event NewChangeRecived ChangeResevered{get{return _ChangeResevered; }}
         public static string NextUndoDescription
         {
             get { return "Undo " + _NextUndoDescription; }
@@ -124,11 +124,12 @@ namespace URD
                 ARCING = false;
                 return;
             }
+
             CollectChanges = false;
+
             if (TempChangeCollection.Changes.Count > 0)
-            {
                 AddChange(TempChangeCollection);
-            }
+            
             TempChangeCollection = null;
         }
 
@@ -151,5 +152,7 @@ namespace URD
         }
         #endregion
     }
+
+    
     public delegate void NewChangeRecived(Change change);
 }
