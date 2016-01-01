@@ -1,7 +1,6 @@
 using System;
 using URD;
-
-namespace URD.BasicOperations
+namespace URD
 {
    public class ChangingAObject
     {
