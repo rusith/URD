@@ -2,7 +2,7 @@
 #undo redo pattern for C# applications
 
 
-this is a basic undo pattern for C# applications. developed for use in GS subtitle project (not published) 
+this is a basic undo pattern for .NET applications. developed for use in GS subtitle project (not published) 
 in this pattern when you want a undo / redo able action you will need to warp that action with using statement.
 as a example if you going to change a property 
 you can do this
