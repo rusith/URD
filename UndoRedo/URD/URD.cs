@@ -11,7 +11,7 @@ namespace URD
     {
         #region Fields
 
-        public static ChangeCollection TempChangeCollection = null;
+        private static ChangeCollection _TempChangeCollection = null;
         private static DOStack<Change> _UndoStack = new DOStack<Change>(128);
         private static DOStack<Change> _RedoStack = new DOStack<Change>(128);
         private static string _NextUndoDescription = "";
@@ -27,6 +27,7 @@ namespace URD
         public static Change NextUndo { get { return UndoStack.Peek(); } }
         public static Change NextRedo { get { return RedoStack.Peek(); } }
         public static bool CollectChanges { get; set; }
+        public static ChangeCollection TempChangeCollection{get{return _TempChangeCollection;} set{_TempChangeCollection=value}}
         public static object NowChangingObject { get; set; }
         public static string NowChangingPropertyName { get; set; }
         public static string NextUndoDescription
