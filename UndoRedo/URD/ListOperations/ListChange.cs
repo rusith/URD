@@ -6,7 +6,5 @@ using System.Threading.Tasks;
 
 namespace URD.ListOperations
 {
-    public class ListChange : Change
-    {
-    }
+    public class ListChange : Change {}
 }
