@@ -20,3 +20,6 @@ C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URDTest\obj\Debug\URDTest.cspr
 C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URDTest\obj\Debug\URDTest.Test_form.resources
 C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URDTest\obj\Debug\URDTest.Properties.Resources.resources
 C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URDTest\obj\Debug\URDTest.csproj.GenerateResource.Cache
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URDTest\bin\Debug\URDTest.exe.config
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URDTest\obj\Debug\URDTest.exe
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URDTest\obj\Debug\URDTest.pdb
