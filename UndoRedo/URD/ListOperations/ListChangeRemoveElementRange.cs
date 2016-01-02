@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace URD.ListOperations
 {
     public class ListChangeRemoveElementRange : ListChange, IDisposable, IUndoAble
     {
+        private bool dispose;
+        public System.Collections.IList RemovedElements { get; set; }
+        public int StartIndex { get; set; }
+        public int Count { get; set; }
         public ListChangeRemoveElementRange(object list, System.Collections.IList removedelements, int startindex, int count, string description)
         {
             if (list == null || URD.NowChangingObject == list) return;
@@ -30,32 +30,23 @@ namespace URD.ListOperations
 
         public void Undo()
         {
-            URD.NowChangingObject = Object;
-            int i = StartIndex;
-            foreach (var element in RemovedElements)
+            using (new ObjectChanging(Object, "", true, false, this))
             {
-                ((System.Collections.IList)Object).Insert(StartIndex, element);
+                int i = StartIndex;
+                foreach (var element in RemovedElements)
+                    ((System.Collections.IList)Object).Insert(StartIndex, element);  
             }
-            URD.NowChangingObject = null;
-            URD.RedoStack.Push(this);
-            return;
         }
 
         public void Redo()
         {
-
-            URD.NowChangingObject = Object;
-            var list = Object as System.Collections.IList;
-            foreach (var item in RemovedElements) list.Remove(item);
-            URD.NowChangingObject = null;
-            URD.UndoStack.Push(this);
-            return;
+            using (new ObjectChanging(Object, "", true, true, this))
+            {
+                var list = Object as System.Collections.IList;
+                foreach (var item in RemovedElements) list.Remove(item);
+            }
         }
 
-        public System.Collections.IList RemovedElements { get; set; }
-        public int StartIndex { get; set; }
-        public int Count { get; set; }
 
-        private bool dispose;
     }
 }

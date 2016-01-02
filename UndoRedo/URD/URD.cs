@@ -17,7 +17,7 @@ namespace URD
         private static string _NextUndoDescription = "";
         private static string _NextRedoDescription = "";
         private static bool ARCING = false;
-        private static event NewChangeRecived _ChangeResevered;
+        public static event NewChangeRecived ChangeResevered;
 
         #endregion
 
@@ -26,10 +26,9 @@ namespace URD
         public static Change NextUndo { get { return UndoStack.Peek(); } }
         public static Change NextRedo { get { return RedoStack.Peek(); } }
         public static bool CollectChanges { get; set; }
-        public static ChangeCollection TempChangeCollection{get{return _TempChangeCollection;} set{_TempChangeCollection=value}}
+        public static ChangeCollection TempChangeCollection{get{return _TempChangeCollection;} set{ _TempChangeCollection = value; }}
         public static object NowChangingObject { get; set; }
         public static string NowChangingPropertyName { get; set; }
-        public static event NewChangeRecived ChangeResevered{get{return _ChangeResevered; }}
         public static string NextUndoDescription
         {
             get { return "Undo " + _NextUndoDescription; }
@@ -100,7 +99,7 @@ namespace URD
         {
             if (!CanRedo) return;
             var change = RedoStack.Pop();
-            if (change is Change == false && change is IUndoAble == false) return;
+            if (change is Change == false || change is IUndoAble == false) return;
             _NextRedoDescription = CanRedo ? RedoStack.Peek().Description : "";
             (change as IUndoAble).Redo();
         }

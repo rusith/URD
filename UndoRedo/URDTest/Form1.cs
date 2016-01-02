@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using URD.BasicOperations;
 using URD.ListOperations;
@@ -28,7 +21,7 @@ namespace URDTest
             using (new PropertyChange(display, "Text", "display label Text Change"))
             {
                 display.Text = display.Text + textbox.Text;
-                textbox.Text = "";
+                textbox.Text = " ";
             }
         }
 

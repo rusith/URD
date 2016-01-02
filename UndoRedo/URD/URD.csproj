@@ -51,6 +51,7 @@
     <Compile Include="ListOperations\ListChangeAddElementRange.cs" />
     <Compile Include="ListOperations\ListChangeRemeveElement.cs" />
     <Compile Include="ListOperations\ListChangeRemoveElementRange.cs" />
+    <Compile Include="ObjectChanging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Tools\SerializationTools.cs" />
     <Compile Include="URD.cs" />

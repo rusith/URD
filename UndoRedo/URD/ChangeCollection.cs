@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace URD
 {
@@ -35,7 +32,6 @@ namespace URD
                 URD.ChangeResevered -= URD_ChangeResevered;
                 URD.CollectChanges = AlreadyChangeCollecting;
                 URD.AddChange(new ChangeCollection { Description = _Description, Changes = _Changes });
-
                 _dispose = false;
             }
         }

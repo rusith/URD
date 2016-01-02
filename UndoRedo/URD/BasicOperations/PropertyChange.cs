@@ -35,22 +35,18 @@ namespace URD.BasicOperations
 
         public void Undo()
         {
-            URD.NowChangingObject = Object;
-            URD.NowChangingPropertyName = PropertyName;
-            Object.GetType().GetProperty(PropertyName).SetValue(Object, OldValue, null);
-            URD.NowChangingObject = null;
-            URD.NowChangingPropertyName = null;
-            URD.RedoStack.Push(this);
-            return;
+            using (new ObjectChanging(Object, PropertyName, true,false, this))
+            {
+                Object.GetType().GetProperty(PropertyName).SetValue(Object, OldValue, null);
+            }
         }
 
         public void Redo()
         {
-            URD.NowChangingObject = Object;
-            URD.NowChangingPropertyName = PropertyName;
-            Object.GetType().GetProperty(PropertyName).SetValue(Object, OldValue, null);
-            URD.NowChangingPropertyName = "";
-            URD.NowChangingObject = null;
+            using (new ObjectChanging(Object, PropertyName, true, true, this))
+            {
+                Object.GetType().GetProperty(PropertyName).SetValue(Object, NewValue, null);
+            }
         }
 
         public object OldValue { get; set; } = null;
