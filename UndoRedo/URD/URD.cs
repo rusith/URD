@@ -1,6 +1,6 @@
 ﻿using System;
 using System.ComponentModel;
-
+using URD.BasicOperations;
 
 namespace URD
 {
@@ -130,6 +130,12 @@ namespace URD
                 AddChange(TempChangeCollection);
             
             TempChangeCollection = null;
+        }
+
+        public static void NewUndoAbleAction(Action actiOn, Action ReverseAction, string description)
+        {
+            if (actiOn == null || ReverseAction == null) return;
+            AddChange(new UndoAbleAction { action = actiOn, reverceAction = ReverseAction, Description = description });
         }
 
         public static bool C(object Obj, string PropertyName = null)

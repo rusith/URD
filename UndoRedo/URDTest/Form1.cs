@@ -14,7 +14,10 @@ namespace URDTest
 
         private void Form1_Load(object sender, EventArgs e)
         {
-
+            Action action = () => { MessageBox.Show("Action"); };
+            Action reverce = () => { MessageBox.Show("Reverce Action"); };
+            URD.URD.NewUndoAbleAction(action, reverce, "Undo able action");
+          
         }
         private void appendButton_Click(object sender, EventArgs e)
         {

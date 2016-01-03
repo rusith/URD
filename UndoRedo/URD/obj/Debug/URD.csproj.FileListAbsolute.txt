@@ -8,3 +8,8 @@ C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URD\bin\Debug\URD.pdb
 C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URD\obj\Debug\URD.csprojResolveAssemblyReference.cache
 C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URD\obj\Debug\URD.dll
 C:\Users\Rusith\Documents\GitHub\URP\URP\UndoRedo\URD\obj\Debug\URD.pdb
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\bin\Debug\URD.dll
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\bin\Debug\URD.pdb
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\obj\Debug\URD.csprojResolveAssemblyReference.cache
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\obj\Debug\URD.dll
+C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\obj\Debug\URD.pdb
