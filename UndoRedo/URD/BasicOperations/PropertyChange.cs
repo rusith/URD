@@ -12,8 +12,8 @@ namespace URD.BasicOperations
         private bool _IsValueType = false;
         private bool _IsString = false;
         
-        public object OldValue { get; set; } = null;
-        public object NewValue { get; set; } = null;
+        public object OldValue { get; set; }
+        public object NewValue { get; set; } 
         public string PropertyName { get; set; }
         
         
@@ -58,9 +58,5 @@ namespace URD.BasicOperations
                 Object.GetType().GetProperty(PropertyName).SetValue(Object, NewValue, null);
             }
         }
-
-
-
-
     }
 }

@@ -15,7 +15,6 @@ namespace URD.ListOperations
             Object = list;
             AddedElements = addedElements as System.Collections.IList;
             StartIndex = startIndex;
-
         }
 
         public void Dispose()

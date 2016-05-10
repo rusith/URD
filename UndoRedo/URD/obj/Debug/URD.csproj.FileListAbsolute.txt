@@ -13,3 +13,8 @@ C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\bin\Debug\URD.pdb
 C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\obj\Debug\URD.csprojResolveAssemblyReference.cache
 C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\obj\Debug\URD.dll
 C:\Users\Rusith\Documents\GitHub\URD\UndoRedo\URD\obj\Debug\URD.pdb
+F:\Projects\URD\UndoRedo\URD\bin\Debug\URD.dll
+F:\Projects\URD\UndoRedo\URD\bin\Debug\URD.pdb
+F:\Projects\URD\UndoRedo\URD\obj\Debug\URD.csprojResolveAssemblyReference.cache
+F:\Projects\URD\UndoRedo\URD\obj\Debug\URD.dll
+F:\Projects\URD\UndoRedo\URD\obj\Debug\URD.pdb

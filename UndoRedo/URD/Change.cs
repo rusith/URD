@@ -7,7 +7,7 @@
     public class Change
     {
 
-        public object Object { get; set; } = null;
-        public string Description { get; set; } = "";
+        public object Object { get; set; }
+        public string Description { get; set; } 
     }
 }

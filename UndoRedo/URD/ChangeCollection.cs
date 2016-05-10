@@ -55,7 +55,7 @@ namespace URD
         }
 
         public ChangeCollection() { }
-        public Stack<Change> Changes { get; set; } = new Stack<Change>();
+        public Stack<Change> Changes { get; set; }
 
     }
 }
