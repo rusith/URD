@@ -5,15 +5,15 @@ namespace URD.ListOperations
     public class ListChangeAddElement : ListChange, IDisposable, IUndoAble
     {
 
-        private bool dispose = false;
+        private bool _dispose;
         public object AddedElement { get; set; }
         public int Index { get; set; }
 
 
-        public ListChangeAddElement(object list, object addedelement, string description, int Index = -25)
+        public ListChangeAddElement(object list, object addedelement, string description, int index = -25)
         {
             if (list == null || URD.NowChangingObject == list) return;
-            dispose = true;
+            _dispose = true;
             Object = list;
             Description = description;
             AddedElement = addedelement;
@@ -22,16 +22,14 @@ namespace URD.ListOperations
 
         public void Dispose()
         {
-            if (dispose)
+            if (!_dispose) return;
+            if (((System.Collections.IList)Object).Contains(AddedElement))
             {
-                if (((System.Collections.IList)Object).Contains(AddedElement))
-                {
-                    Index = ((System.Collections.IList)Object).IndexOf(AddedElement);
-                    URD.AddChange(this);
-                }
-
-                dispose = false;
+                Index = ((System.Collections.IList)Object).IndexOf(AddedElement);
+                URD.AddChange(this);
             }
+
+            _dispose = false;
         }
 
         public void Undo()

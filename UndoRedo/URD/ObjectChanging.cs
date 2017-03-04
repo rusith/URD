@@ -8,40 +8,36 @@ namespace URD
     /// </summary>
     public class ObjectChanging: IDisposable
     {
-        private bool _AutoAdd = false;
-        private bool _UndoOrRedo = false;
-        private Change _ChangeToAdd = null;
+        private readonly bool _autoAdd;
+        private readonly bool _undoOrRedo;
+        private readonly Change _changeToAdd;
         
         /// <summary>
         /// constructor
         /// </summary>
-        /// <param name="ChangingObject">changing object</param>
-        /// <param name="ChangingPropertyName">changing property name pass "" if don't want </param>
-        /// <param name="AutoAdd">pass true if you want to automatically push a change to undo or redo stack when desposing this object</param>
-        /// <param name="UndoOrRedo">true = push change to undo stack when desposing  false = push change to redo stack when desposing</param>
-        /// <param name="ChangeToAdd">change to auto push</param>
-        public  ObjectChanging(object ChangingObject,string ChangingPropertyName,bool AutoAdd=false,bool UndoOrRedo=true,Change ChangeToAdd=null)
+        /// <param name="changingObject">changing object</param>
+        /// <param name="changingPropertyName">changing property name pass "" if don't want </param>
+        /// <param name="autoAdd">pass true if you want to automatically push a change to undo or redo stack when desposing this object</param>
+        /// <param name="undoOrRedo">true = push change to undo stack when desposing  false = push change to redo stack when desposing</param>
+        /// <param name="changeToAdd">change to auto push</param>
+        public  ObjectChanging(object changingObject,string changingPropertyName,bool autoAdd=false,bool undoOrRedo=true,Change changeToAdd=null)
         {
-            URD.NowChangingObject = ChangingObject;
-            if (ChangingPropertyName != "" && ChangingPropertyName!=null)
-                URD.NowChangingPropertyName = ChangingPropertyName;
-            _AutoAdd = AutoAdd;
-            _UndoOrRedo = UndoOrRedo;
-            _ChangeToAdd = ChangeToAdd;
+            URD.NowChangingObject = changingObject;
+            if (!string.IsNullOrEmpty(changingPropertyName))
+                URD.NowChangingPropertyName = changingPropertyName;
+            _autoAdd = autoAdd;
+            _undoOrRedo = undoOrRedo;
+            _changeToAdd = changeToAdd;
         }
 
         public void Dispose()
         {
             URD.NowChangingObject = null;
             URD.NowChangingPropertyName = "";
-            if (_AutoAdd)
-            {
-                if (_ChangeToAdd!=null)
-                {
-                    if (_UndoOrRedo)  URD.UndoStack.Push(_ChangeToAdd);
-                    else URD.RedoStack.Push(_ChangeToAdd);
-                }
-            }
+            if (!_autoAdd) return;
+            if (_changeToAdd == null) return;
+            if (_undoOrRedo)  URD.UndoStack.Push(_changeToAdd);
+            else URD.RedoStack.Push(_changeToAdd);
         }
     }
 }

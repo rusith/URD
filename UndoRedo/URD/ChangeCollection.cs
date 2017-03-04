@@ -1,57 +1,57 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace URD
 {
     public class ChangeCollection : Change, IDisposable, IUndoAble
     {
-        Stack<Change> _Changes;
-        string _Description = "";
-        private bool _dispose = false;
-        private bool AlreadyChangeCollecting = false;
-        public ChangeCollection(string Description, params string[] args)
+        readonly Stack<Change> _changes;
+        readonly string _description = "";
+        private bool _dispose;
+        private readonly bool _alreadyChangeCollecting;
+        public ChangeCollection(string description, params object[] args)
         {
-            _Changes = new Stack<Change>();
-            _Description = string.Format(Description, args);
+            _changes = new Stack<Change>();
+            _description = string.Format(description, args);
             URD.ChangeResevered += URD_ChangeResevered;
-            AlreadyChangeCollecting = URD.CollectChanges;
+            _alreadyChangeCollecting = URD.CollectChanges;
             URD.CollectChanges = true;
             _dispose = true;
         }
 
         private void URD_ChangeResevered(Change change)
         {
-            if (_Changes != null)
-                _Changes.Push(change);
+            _changes?.Push(change);
         }
 
         public void Dispose()
         {
-            if (_dispose)
-            {
-                URD.ChangeResevered -= URD_ChangeResevered;
-                URD.CollectChanges = AlreadyChangeCollecting;
-                URD.AddChange(new ChangeCollection { Description = _Description, Changes = _Changes });
-                _dispose = false;
-            }
+            if (!_dispose) return;
+            URD.ChangeResevered -= URD_ChangeResevered;
+            URD.CollectChanges = _alreadyChangeCollecting;
+            URD.AddChange(new ChangeCollection { Description = _description, Changes = _changes });
+            _dispose = false;
         }
 
         public void Undo()
         {
             if (Changes.Count < 1) return;
 
-            foreach (Change change in Changes)
-                (change as IUndoAble).Undo();
-
+            foreach (var undoAble in Changes.OfType<IUndoAble>())
+            {
+                undoAble.Undo();
+            }
         }
 
         public void Redo()
         {
             if (Changes.Count < 1) return;
 
-            foreach (Change change in Changes)
-                (change as IUndoAble).Redo();
-
+            foreach (var undoAble in Changes.OfType<IUndoAble>())
+            {
+                undoAble.Redo();
+            }
         }
 
         public ChangeCollection() { }

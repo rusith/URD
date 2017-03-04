@@ -11,12 +11,15 @@ namespace URD
     {
         #region Fields
 
-        private static ChangeCollection _TempChangeCollection = null;
-        private static DOStack<Change> _UndoStack = new DOStack<Change>(128);
-        private static DOStack<Change> _RedoStack = new DOStack<Change>(128);
-        private static string _NextUndoDescription = "";
-        private static string _NextRedoDescription = "";
-        private static bool ARCING = false;
+        private static string _nextUndoDescription = "";
+        private static string _nextRedoDescription = "";
+        private static bool _arcing;
+
+        static URD()
+        {
+            TempChangeCollection = null;
+        }
+
         public static event NewChangeRecived ChangeResevered;
 
         #endregion
@@ -26,15 +29,16 @@ namespace URD
         public static Change NextUndo { get { return UndoStack.Peek(); } }
         public static Change NextRedo { get { return RedoStack.Peek(); } }
         public static bool CollectChanges { get; set; }
-        public static ChangeCollection TempChangeCollection{get{return _TempChangeCollection;} set{ _TempChangeCollection = value; }}
+        public static ChangeCollection TempChangeCollection { get; set; }
+
         public static object NowChangingObject { get; set; }
         public static string NowChangingPropertyName { get; set; }
         public static string NextUndoDescription
         {
-            get { return "Undo " + _NextUndoDescription; }
+            get { return "Undo " + _nextUndoDescription; }
             private set
             {
-                _NextUndoDescription = value;
+                _nextUndoDescription = value;
                 NotifyStaticPropertyChange("NextUndoDescription");
             }
         }
@@ -42,27 +46,26 @@ namespace URD
         {
             get
             {
-                return "Redo " + _NextRedoDescription;
+                return "Redo " + _nextRedoDescription;
             }
-            private set
-            {
-                _NextRedoDescription = value;
-                NotifyStaticPropertyChange("NextRedoDescription");
-            }
+            //private set
+            //{
+            //    _nextRedoDescription = value;
+            //    NotifyStaticPropertyChange("NextRedoDescription");
+            //}
         }
         public static bool CanUndo
         {
-            get { return UndoStack.Count > 0 ? true : false; }
+            get { return UndoStack.Count > 0; }
         }
         public static bool CanRedo
         {
-            get { return RedoStack.Count > 0 ? true : false; }
+            get { return RedoStack.Count > 0; }
         }
 
-        public static DOStack<Change> RedoStack { get { return _RedoStack; } }
+        public static DOStack<Change> RedoStack { get; } = new DOStack<Change>(128);
 
-        public static DOStack<Change> UndoStack { get { return _UndoStack; } }
-
+        public static DOStack<Change> UndoStack { get; } = new DOStack<Change>(128);
 
         #endregion
 
@@ -72,7 +75,7 @@ namespace URD
             if (change == null || (change is IUndoAble) == false) return;
             if (CollectChanges)
             {
-                ChangeResevered(change);
+                ChangeResevered?.Invoke(change);
                 return;
             }
             UndoStack.Push(change);
@@ -87,40 +90,37 @@ namespace URD
             if (!CanUndo) return;
 
             var change = UndoStack.Pop();
-            if (change is Change == false && change is IUndoAble == false) return;
+            if (change != null == false) return;
             NextUndoDescription = CanUndo ? UndoStack.Peek().Description : "";
-            (change as IUndoAble).Undo();
-
-
-
+            var undoAble = change as IUndoAble;
+            undoAble?.Undo();
         }
 
         public static void RedoLastUndo()
         {
             if (!CanRedo) return;
             var change = RedoStack.Pop();
-            if (change is Change == false || change is IUndoAble == false) return;
-            _NextRedoDescription = CanRedo ? RedoStack.Peek().Description : "";
+            if (change != null == false || change is IUndoAble == false) return;
+            _nextRedoDescription = CanRedo ? RedoStack.Peek().Description : "";
             (change as IUndoAble).Redo();
         }
 
-        public static void StartChangeCollecting(string Description)
+        public static void StartChangeCollecting(string description)
         {
             if (CollectChanges)
             {
-                ARCING = true;
+                _arcing = true;
                 return;
             }
             CollectChanges = true;
-            TempChangeCollection = new ChangeCollection();
-            TempChangeCollection.Description = Description;
+            TempChangeCollection = new ChangeCollection {Description = description};
 
         }
         public static void EndChangeCollecting()
         {
-            if (ARCING)
+            if (_arcing)
             {
-                ARCING = false;
+                _arcing = false;
                 return;
             }
 
@@ -132,27 +132,25 @@ namespace URD
             TempChangeCollection = null;
         }
 
-        public static void NewUndoAbleAction(Action actiOn, Action ReverseAction, string description)
+        public static void NewUndoAbleAction(Action actiOn, Action reverseAction, string description)
         {
-            if (actiOn == null || ReverseAction == null) return;
-            AddChange(new UndoAbleAction { action = actiOn, reverceAction = ReverseAction, Description = description });
+            if (actiOn == null || reverseAction == null) return;
+            AddChange(new UndoAbleAction { action = actiOn, reverceAction = reverseAction, Description = description });
         }
 
-        public static bool C(object Obj, string PropertyName = null)
+        public static bool C(object obj, string propertyName = null)
         {
 
-            return Obj == NowChangingObject ? PropertyName != null ?
-                    PropertyName == NowChangingPropertyName ? false : true : false : true;
+            return obj != NowChangingObject || propertyName != null && propertyName != NowChangingPropertyName;
         }
 
         #endregion
 
         #region PropertyChangeNotification
         public static event EventHandler<PropertyChangedEventArgs> StaticPropertyChanged;
-        public static void NotifyStaticPropertyChange(string Propertyname_)
+        public static void NotifyStaticPropertyChange(string propertyname)
         {
-            if (StaticPropertyChanged != null)
-                StaticPropertyChanged(null, new PropertyChangedEventArgs(Propertyname_));
+            StaticPropertyChanged?.Invoke(null, new PropertyChangedEventArgs(propertyname));
 
         }
         #endregion

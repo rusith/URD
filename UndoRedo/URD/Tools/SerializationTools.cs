@@ -23,14 +23,14 @@ namespace URD.Tools
         }
 
         /// <summary>
-        /// deserialize an string
+        /// De serialize an string
         /// </summary>
-        /// <param name="typeofobject">type of the object</param>
-        /// <param name="str">string to deserialize</param>
-        /// <returns>returns deserialized object</returns>
+        /// <param name="type"></param>
+        /// <param name="str">string to de serialize</param>
+        /// <returns>returns De serialized object</returns>
         public static object DeserializeString(Type type, string str)
         {
-            XmlSerializer xmlserializer = new XmlSerializer(type);
+            var xmlserializer = new XmlSerializer(type);
             using (TextReader reader = new StringReader(str))
             {
                 return  xmlserializer.Deserialize(reader);
@@ -38,14 +38,13 @@ namespace URD.Tools
         }
 
         /// <summary>
-        /// get deep copy of a object using serialization mathod [serialize-->deserialize-->return]
+        /// get deep copy of a object using serialization method [serialize-->de serialize-->return]
         /// </summary>
-        /// <param obj>object for copy</param>
-        /// <returns>copyed object</returns>
+        /// <param name="obj"></param>
+        /// <returns>coyed object</returns>
         public static object GetCopyOfAObject(object obj)
         {
-            if (obj == null) return null;
-            return DeserializeString(obj.GetType(), SerializeObject(obj));
+            return obj == null ? null : DeserializeString(obj.GetType(), SerializeObject(obj));
         }
 
         #endregion

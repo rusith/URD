@@ -6,7 +6,6 @@
     /// </summary>
     public class Change
     {
-
         public object Object { get; set; }
         public string Description { get; set; } 
     }

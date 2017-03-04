@@ -1,4 +1,0 @@
-F:\Projects\URD\UndoRedo\URD\bin\Release\URD.dll
-F:\Projects\URD\UndoRedo\URD\bin\Release\URD.pdb
-F:\Projects\URD\UndoRedo\URD\obj\Release\URD.dll
-F:\Projects\URD\UndoRedo\URD\obj\Release\URD.pdb

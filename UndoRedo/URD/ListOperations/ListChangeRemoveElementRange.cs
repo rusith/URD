@@ -4,7 +4,7 @@ namespace URD.ListOperations
 {
     public class ListChangeRemoveElementRange : ListChange, IDisposable, IUndoAble
     {
-        private bool dispose;
+        private bool _dispose;
         public System.Collections.IList RemovedElements { get; set; }
         public int StartIndex { get; set; }
         public int Count { get; set; }
@@ -15,24 +15,22 @@ namespace URD.ListOperations
             RemovedElements = removedelements;
             StartIndex = startindex;
             Count = count;
-            dispose = true;
+            _dispose = true;
             Description = description;
 
         }
         public void Dispose()
         {
-            if (dispose)
-            {
-                URD.AddChange(this);
-                dispose = false;
-            }
+            if (!_dispose) return;
+            URD.AddChange(this);
+            _dispose = false;
         }
 
         public void Undo()
         {
             using (new ObjectChanging(Object, "", true, false, this))
             {
-                int i = StartIndex;
+                var i = StartIndex;
                 foreach (var element in RemovedElements)
                     ((System.Collections.IList)Object).Insert(StartIndex, element);  
             }
@@ -43,7 +41,10 @@ namespace URD.ListOperations
             using (new ObjectChanging(Object, "", true, true, this))
             {
                 var list = Object as System.Collections.IList;
-                foreach (var item in RemovedElements) list.Remove(item);
+                foreach (var item in RemovedElements)
+                {
+                    list?.Remove(item);
+                }
             }
         }
 

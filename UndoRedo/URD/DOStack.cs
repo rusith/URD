@@ -10,9 +10,7 @@ namespace URD
 
         private int _top;
 
-        private int _count;
-
-        public int Count { get { return _count; } }
+        public int Count { get; private set; }
 
         public DOStack(int capacity)
         {
@@ -21,8 +19,8 @@ namespace URD
 
         public void Push(T item)
         {
-            _count += 1;
-            _count = _count > _items.Length ? _items.Length : _count;
+            Count += 1;
+            Count = Count > _items.Length ? _items.Length : Count;
 
             _items[_top] = item;
             _top = (_top + 1) % _items.Length;
@@ -30,8 +28,8 @@ namespace URD
 
         public T Pop()
         {
-            _count -= 1;
-            _count = _count < 0 ? 0 : _count;
+            Count -= 1;
+            Count = Count < 0 ? 0 : Count;
 
             _top = (_items.Length + _top - 1) % _items.Length;
             return _items[_top];
@@ -51,12 +49,12 @@ namespace URD
 
         public void Clear()
         {
-            _count = 0;
+            Count = 0;
         }
 
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < Count; i++) yield return GetItem(i);
+            for (var i = 0; i < Count; i++) yield return GetItem(i);
         }
 
         IEnumerator IEnumerable.GetEnumerator()

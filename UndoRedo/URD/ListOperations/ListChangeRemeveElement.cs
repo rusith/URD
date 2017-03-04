@@ -6,7 +6,7 @@ namespace URD.ListOperations
     {
 
 
-        private bool dispose = false;
+        private bool _dispose;
         public object RemovedElement { get; set; }
         public int RemovedAt { get; set; }
 
@@ -17,18 +17,16 @@ namespace URD.ListOperations
             RemovedElement = removedelement;
             RemovedAt = removedat;
             Description = description;
-            dispose = true;
+            _dispose = true;
         }
         public void Dispose()
         {
-            if (dispose)
+            if (!_dispose) return;
+            if (((System.Collections.IList)Object).Contains(RemovedElement) == false)
             {
-                if (((System.Collections.IList)Object).Contains(RemovedElement) == false)
-                {
-                    URD.AddChange(this);
-                }
-                dispose = false;
+                URD.AddChange(this);
             }
+            _dispose = false;
         }
 
         public void Undo()

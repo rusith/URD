@@ -5,20 +5,19 @@ namespace URD.BasicOperations
 {
     public class UndoAbleAction:Change,IUndoAble
     {
-        private Action _action;
-        private Action _reverceAction;
-        public Action action { get { return _action; } set { _action = value; } }
-        public Action reverceAction { get { return _reverceAction; } set { _reverceAction = value; } }
+        public Action Action { get; set; }
+
+        public Action ReverceAction { get; set; }
 
         public void Redo()
         {
-            _action.Invoke();
+            Action.Invoke();
             URD.UndoStack.Push(this);
         }
 
         public void Undo()
         {
-            _reverceAction.Invoke();
+            ReverceAction.Invoke();
             URD.RedoStack.Push(this);
         }
     }
