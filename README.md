@@ -1,5 +1,5 @@
 # URD
-#undo redo pattern for C# applications
+#undo redo pattern for .Net applications
 
 
 this is a basic undo and redo pattern for .NET applications.
